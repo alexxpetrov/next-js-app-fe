@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { ENDPOINT } from "./config";
-import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
-import { User } from "../types/User";
+import { cookies } from "next/headers";
+import { User } from "../types/user";
+import { ENDPOINT } from "./config";
 
 // Create a reusable Axios instance with withCredentials: true for cookies
 export const ssrAxiosInstance = axios.create({
@@ -38,7 +38,7 @@ ssrAxiosInstance.interceptors.request.use(
 
 // Function to refresh the access token using the refresh token stored in cookies
 const refreshAccessToken = async () => {
-  const accessTokenCookie = cookies().get("access_token")!.value;
+  const accessTokenCookie = (await cookies()).get("access_token")!.value;
   const tokenUserData = jwtDecode(accessTokenCookie) as User;
 
   try {
@@ -56,7 +56,7 @@ const refreshAccessToken = async () => {
   }
 };
 
-export const useAxiosSSRInterceptor = () => {
+export const subscribeSSRInterceptor = () => {
   // Create a list to hold the request queue
   const refreshAndRetryQueue: RetryQueueItem[] = [];
   // @TODO: Add logout functionality when both accesstoken/refreshtoken have expired.
@@ -123,7 +123,7 @@ export const useAxiosSSRInterceptor = () => {
 export const useSSRFetch = () => {
   // Main request function that manages access tokens and retries failed requests
   const protectedFetcher = async (url: string, config: AxiosRequestConfig) => {
-    const accessTokenCookie = cookies().get("access_token")?.value;
+    const accessTokenCookie = (await cookies()).get("access_token")?.value;
     // Make the API request using ssrAxiosInstance
     try {
       const response = await ssrAxiosInstance(url, {
@@ -134,7 +134,7 @@ export const useSSRFetch = () => {
 
       return response.data; // If request succeeds, return the data
     } catch (error) {
-      // console.log("Error during protected fetch:", error.message);
+      console.error("Error during protected fetch:", (error as AxiosError).message);
     }
   };
 

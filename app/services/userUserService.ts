@@ -1,8 +1,8 @@
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { UserInfoService } from "@gen/app/user/v1/user_connect";
-import { useClient } from "dashboard/hooks/useAuthClient";
-import { CHAT_GRPC_ENDPOINT } from "dashboard/utils/config";
 import dayjs from "dayjs";
+import { useClient } from "hooks/useAuthClient";
+import { CHAT_GRPC_ENDPOINT } from "utils/config";
 
 const transport = createConnectTransport({
   baseUrl: CHAT_GRPC_ENDPOINT,

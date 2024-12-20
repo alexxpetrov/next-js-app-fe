@@ -1,19 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import { Tooltip } from "@components/Tooltip/Tooltip";
+import { useChatContext } from "hooks/useChatContext";
+import { useRoomsContext } from "hooks/useRoomsContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FiSend } from "react-icons/fi";
 import { MessageList } from "./MessageList";
 
-export const ChatBody = ({
-  selectedChat,
-  setSelectedChat,
-  messages,
-  scrollableRef,
-  webSocketRef,
-  userId,
-}) => {
+export const ChatBody = () => {
   const [message, setMessage] = useState<string>("");
+  const { scrollableRef, messages } = useChatContext();
+  const { webSocketRef, selectedChat, setSelectedChat } = useRoomsContext();
 
   const handleSendMessage = () => {
     if (message.trim() === "") return;
@@ -29,7 +24,7 @@ export const ChatBody = ({
   const handleBlur = useCallback(() => {
     // Refocus the input if it loses focus
     if (inputRef.current) {
-      inputRef.current.focus();
+      (inputRef.current as HTMLInputElement).focus();
     }
   }, []);
 
@@ -85,7 +80,7 @@ export const ChatBody = ({
         className="p-4 overflow-y-auto scroll-smooth space-y-4"
         ref={scrollableRef}
       >
-        <MessageList messages={messages} userId={userId} />
+        <MessageList />
       </div>
 
       {/* Chat Input */}

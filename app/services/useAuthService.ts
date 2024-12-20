@@ -4,7 +4,7 @@
 import { AuthService } from "@gen/auth/v1/auth_connect";
 import { jwtDecode } from "jwt-decode";
 import { useClient } from "../hooks/useAuthClient";
-import { LoginDtoType, RegisterDtoType, User } from "../types/User";
+import { LoginDtoType, RegisterDtoType, User } from "../types/user";
 
 type WebauthnCreds = Credential & {
   response: {

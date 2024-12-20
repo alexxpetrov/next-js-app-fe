@@ -1,13 +1,13 @@
-import { Message } from "chat/types";
-import React, { FC } from "react";
-import { ChatMessage } from "./ChatMessage";
 import { formatDate } from "chat/utils/utils";
+import { useChatContext } from "hooks/useChatContext";
+import { useUserContext } from "hooks/useUserContext";
+import React from "react";
+import { ChatMessage } from "./ChatMessage";
 
-type MessageListProps = {
-  messages: Message[];
-  userId: string;
-};
-export const MessageList: FC<MessageListProps> = ({ messages, userId }) => {
+export const MessageList = () => {
+  const { user } = useUserContext();
+  const { messages } = useChatContext();
+
   if (!messages.length) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -35,7 +35,7 @@ export const MessageList: FC<MessageListProps> = ({ messages, userId }) => {
         )}
         <ChatMessage
           message={message}
-          isCurrentUser={message.user_id === userId}
+          isCurrentUser={message.user_id === user?.id}
         />
       </React.Fragment>
     );

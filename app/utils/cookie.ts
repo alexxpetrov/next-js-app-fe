@@ -8,7 +8,7 @@ const currentTime = new Date();
 currentTime.setHours(currentTime.getHours() + ACCESS_TOKEN_EXPIRATION); 
 
 export const setAccessTokenCookie = async (token: string) => {
-  cookies().set("access_token", token, {
+  (await cookies()).set("access_token", token, {
     name: "access_token",
     value: token,
     expires: currentTime,
@@ -20,5 +20,5 @@ export const setAccessTokenCookie = async (token: string) => {
 };
 
 export const deleteAccessTokenCookie = async () => {
-  cookies().delete("access_token");
+  (await cookies()).delete("access_token");
 };

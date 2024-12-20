@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { useCallback } from "react";
 import { useUserContext } from "../hooks/useUserContext";
 import { serverRefreshToken } from "../services/serverAction";
-import { User } from "../types/User";
+import { User } from "../types/user";
 import { CHAT_ENDPOINT, IS_DEVELOPMENT } from "./config";
 
 // Create a reusable Axios instance with withCredentials: true for cookies

@@ -1,94 +1,18 @@
 import { Tooltip } from "@components/Tooltip/Tooltip";
-import { notification } from "antd";
-import { UserContext } from "dashboard/contexts/UserContext";
-import { LoginDtoType, RegisterDtoType, User } from "dashboard/types/User";
-import {
-  ChangeEventHandler,
-  FormEventHandler,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
-import { FiCheckCircle } from "react-icons/fi";
+import { useFormControls } from "./hooks/useFormControls";
+import { AuthType, SignUpType } from "./types";
 
-enum SignUpType {
-  login = "login",
-  register = "register",
-}
-enum AuthType {
-  biometry = "biometry",
-  default = "default",
-}
 export const LoginModal = () => {
-  const { login, register, handleWebAuthRegister } = useContext(UserContext);
-  const [authType, setAuthType] = useState<AuthType>(AuthType.biometry);
-  const [formState, setFormState] = useState<SignUpType>(SignUpType.login);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    remember: false,
-  });
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const handleBiometricAuth = useCallback(async () => {
-    const response = await handleWebAuthRegister();
-
-    notification.success({
-      description: "Success",
-      message:
-        !response?.firstName && !response?.lastName
-          ? "Welcome!"
-          : `Welcome ${response?.firstName ?? ""} ${response?.lastName ?? ""}`,
-      icon: <FiCheckCircle />,
-      type: "success",
-    });
-  }, [handleWebAuthRegister]);
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e!.preventDefault(); // Prevent page refresh
-
-    let response: User | null = null;
-    let authDto;
-
-    switch (formState) {
-      case "login":
-        authDto = {
-          email: formData.email,
-          password: formData.password,
-        };
-
-        response = await login(authDto as LoginDtoType);
-        break;
-      case "register":
-        authDto = {
-          email: formData.email,
-          password: formData.password,
-          firstName: formData.firstName ?? "",
-          lastName: formData.lastName ?? "",
-        };
-        response = await register(authDto as RegisterDtoType);
-
-        break;
-      default:
-        break;
-    }
-
-    notification.success({
-      description: "Success",
-      message: `Welcome ${response?.firstName} ${response?.lastName}`,
-      icon: <FiCheckCircle />,
-      type: "success",
-    });
-  };
+  const {
+    handleInputChange,
+    handleBiometricAuth,
+    handleSubmit,
+    setFormState,
+    formState,
+    authType,
+    setAuthType,
+    formData,
+  } = useFormControls();
 
   return (
     <div className="fixed inset-0 bg-slate-900 bg-opacity-95 flex items-center justify-center z-50">
@@ -218,7 +142,7 @@ export const LoginModal = () => {
                   Submit
                 </button>
                 <button
-                  type="submit"
+                  type="button"
                   onClick={() => setAuthType(AuthType.biometry)}
                   className="w-full bg-slate-700 hover:bg-slate-800 text-white font-medium py-2 px-4 rounded-md flex items-center justify-center space-x-2"
                 >
@@ -236,7 +160,7 @@ export const LoginModal = () => {
                 <span>Click me</span>
               </button>
               <button
-                type="submit"
+                type="button"
                 onClick={() => setAuthType(AuthType.default)}
                 className="w-full bg-slate-700 hover:bg-slate-800 text-white font-medium py-2 px-4 rounded-md flex items-center justify-center space-x-2"
               >

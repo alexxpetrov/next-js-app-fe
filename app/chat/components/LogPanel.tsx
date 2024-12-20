@@ -1,13 +1,14 @@
 import { Tooltip } from "@components/Tooltip/Tooltip";
-import { ChatRoom } from "chat/types";
-import Login from "dashboard/features/Auth/Login/Login";
-import { useUserContext } from "dashboard/hooks/useUserContext";
-import { useUserService } from "dashboard/services/userUserService";
+import Login from "features/Auth/Login/Login";
+import { useRoomsContext } from "hooks/useRoomsContext";
+import { useUserContext } from "hooks/useUserContext";
 import { useMemo } from "react";
+import { useUserService } from "services/userUserService";
 import useSWR from "swr";
 
-export const LogPanel = ({ rooms }: { rooms: ChatRoom[] }) => {
+export const LogPanel = () => {
   const { getUserInfo } = useUserService();
+  const { rooms } = useRoomsContext();
 
   const { user } = useUserContext();
 

@@ -1,6 +1,6 @@
 import { ChatRoom } from "chat/types";
-import { useChatFetchData } from "dashboard/utils/chatFetcher";
 import { useState } from "react";
+import { useChatFetchData } from "utils/chatFetcher";
 
 export const CreateChatModal = ({
   onClose,

@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,14 +23,32 @@
       }
     ],
     "paths": {
-      "@/*": ["./app/*"],
-      "@components/*": ["components/*"], // Map "components" to the "components" folder
-      "@gen/*": ["./gen/*"], // (Optional) Map other directories as needed
-      "@styles/*": ["./styles/*"], // (Optional) Map other directories as needed
-      "@public/*": ["../public/*"]
-    }
+      "@/*": [
+        "./app/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ], // Map "components" to the "components" folder
+      "@gen/*": [
+        "./gen/*"
+      ], // (Optional) Map other directories as needed
+      "@styles/*": [
+        "./styles/*"
+      ], // (Optional) Map other directories as needed
+      "@public/*": [
+        "../public/*"
+      ]
+    },
+    "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "unusedExpectErrorDirectives": false
 }

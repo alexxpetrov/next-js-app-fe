@@ -18,6 +18,18 @@ const nextConfig = {
 
     return config;
   },
+  experimental: {
+    turbo: {
+      resolve: {
+        fallback: {
+          fs: false,
+        },
+      },
+      resolveAlias: {
+        underscore: "lodash",
+      },
+    },
+  },
 };
 
 export default nextConfig;

@@ -1,7 +1,7 @@
 "use server";
 import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
-import { RegisterDtoType, User } from "../types/User";
+import { RegisterDtoType, User } from "../types/user";
 import { IS_DEVELOPMENT, WEBAUTHN_ENDPOINT } from "../utils/config";
 import { deleteAccessTokenCookie, setAccessTokenCookie } from "../utils/cookie";
 

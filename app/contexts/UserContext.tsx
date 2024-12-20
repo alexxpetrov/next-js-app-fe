@@ -7,17 +7,15 @@ import {
   serverLogout,
   serverRegister,
 } from "../services/serverAction";
+import { useAuthService } from "../services/useAuthService";
 import {
   LoginDtoType,
   RegisterDtoType,
   User,
   UserContextType,
-} from "../types/User";
+} from "../types/user";
 import { IS_DEVELOPMENT } from "../utils/config";
-// import { notification } from "antd";
-import { useAuthService } from "../services/useAuthService";
 
-// Create the user context
 export const UserContext = createContext<UserContextType>({
   user: null,
   login: async () => ({} as User),
@@ -27,7 +25,6 @@ export const UserContext = createContext<UserContextType>({
   handleWebAuthRegister: () => Promise.resolve({} as User),
 });
 
-// Provider component
 export const UserProvider = ({
   accessToken,
   children,
@@ -38,7 +35,7 @@ export const UserProvider = ({
   const { push } = useRouter();
   const [user, setUser] = useState(
     accessToken ? { ...jwtDecode(accessToken), accessToken } : null
-  ); // Stores user info
+  );
   const client = useAuthService();
 
   const handleWebAuthRegister = async () => {
@@ -84,14 +81,6 @@ export const UserProvider = ({
         password,
       });
     }
-    // if (response.error) {
-    //   notification.error({
-    //     message: "Error",
-    //     description: response.error,
-    //     icon: "cross",
-    //   });
-    //   throw new Error(response.error);
-    // }
 
     setUser(response);
 
@@ -109,8 +98,8 @@ export const UserProvider = ({
       });
     }
 
-    setUser(null);
     push("/");
+    setUser(null);
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import "../../../envConfig.ts";
+import "../../envConfig.ts";
 
 export const ENDPOINT = process.env.NEXT_PUBLIC_HOST || "http://localhost:4500";
 export const WEBAUTHN_ENDPOINT =

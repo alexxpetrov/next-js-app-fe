@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 import { useDispatch } from "react-redux";
-import { actions } from "../../../store/user/actions";
+import { actions } from "../../store/user/actions";
 import Login from "../Auth/Login/Login";
 
 // const headerItems = [
